@@ -194,7 +194,14 @@
     <div class="container">
         <h1>🎬 YouTube Search & Player</h1>
         
-
+        <div class="api-key-container">
+            <div class="info-text">
+                <strong>Setup Instructions:</strong> 
+                <br>1. Get your free API key from <span class="highlight">Google Cloud Console → YouTube Data API v3</span>
+                <br>2. Replace 'YOUR_API_KEY_HERE' with your actual API key in the JavaScript code
+                <br>3. Save the file and you're ready to search!
+            </div>
+        </div>
 
         <div class="search-container">
             <input type="text" class="search-input" id="searchInput" placeholder="Search for YouTube videos..." onkeypress="handleKeyPress(event)">
@@ -224,11 +231,6 @@
             const apiKey = API_KEY;
             const query = document.getElementById('searchInput').value.trim();
             const resultsDiv = document.getElementById('results');
-
-            if (!apiKey || apiKey === 'AIzaSyCUQnDjRwDQs3S4eUTIqy3fmTXYLnG0nkM') {
-                showError('Please add your YouTube Data API key to the API_KEY variable in the code.');
-                return;
-            }
 
             if (!query) {
                 showError('Please enter a search term.');
