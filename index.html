@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAM - School Attendance Management</title>
+    <title>YouTube Search & Player</title>
     <style>
         * {
             margin: 0;
@@ -13,1342 +13,313 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            color: #ffffff;
-            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            position: relative;
-            padding: 10px;
-        }
-
-        /* Animated background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(120, 255, 198, 0.05) 0%, transparent 50%);
-            animation: backgroundFloat 20s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes backgroundFloat {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(180deg); }
+            padding: 20px;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            min-height: calc(100vh - 20px);
-            animation: fadeInUp 1s ease-out;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 0;
+            background-clip: text;
         }
 
-        .header-right {
+        .search-container {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            position: relative;
         }
 
-        .stats {
-            font-size: 14px;
-            color: #a0a0a0;
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
         }
 
-        .btn {
-            padding: 12px 24px;
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .search-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
             border: none;
             border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            color: white;
-            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
-        }
-
-        .btn-success:hover {
-            box-shadow: 0 15px 35px rgba(46, 204, 113, 0.4);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
-        }
-
-        .btn-danger:hover {
-            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
-        }
-
-        .btn-purple {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-            color: white;
-            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.3);
-        }
-
-        .btn-purple:hover {
-            box-shadow: 0 15px 35px rgba(155, 89, 182, 0.4);
-        }
-
-        .btn-orange {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            color: white;
-            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
-        }
-
-        .btn-orange:hover {
-            box-shadow: 0 15px 35px rgba(243, 156, 18, 0.4);
-        }
-
-        .btn:not(.btn-success):not(.btn-danger):not(.btn-purple):not(.btn-orange) {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn:not(.btn-success):not(.btn-danger):not(.btn-purple):not(.btn-orange):hover {
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-        }
-
-        .main-content {
-            display: flex;
-            height: calc(100vh - 100px);
-            min-height: 500px;
-        }
-
-        .left-panel, .right-panel {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .left-panel {
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .camera-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 15px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 300px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .camera-display {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-            min-height: 200px;
-            overflow: hidden;
-        }
-
-        .camera-display img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .camera-controls {
-            display: flex;
-            justify-content: center;
-            padding: 15px 0 0 0;
-            gap: 10px;
-        }
-
-        .table-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 15px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .table-header h3 {
-            color: #ffffff;
-            font-size: 18px;
-            margin: 0;
-        }
-
-        .attendance-table {
-            flex: 1;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(10px);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            color: #ffffff;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        th {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
-            backdrop-filter: blur(20px);
-            color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        tbody tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px 20px;
-            border-radius: 12px;
-            color: white;
-            font-weight: 600;
-            z-index: 1000;
-            animation: slideInFromTop 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 300px;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .toast.success {
-            background: linear-gradient(135deg, rgba(46, 204, 113, 0.8), rgba(39, 174, 96, 0.8));
-        }
-
-        .toast.error {
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.8), rgba(192, 57, 43, 0.8));
-        }
-
-        .toast.warning {
-            background: linear-gradient(135deg, rgba(243, 156, 18, 0.8), rgba(230, 126, 34, 0.8));
-        }
-
-        @keyframes slideInFromTop {
-            from {
-                transform: translateX(-50%) translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOutToTop {
-            from {
-                transform: translateX(-50%) translateY(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(-50%) translateY(-100%);
-                opacity: 0;
-            }
-        }
-
-        .manual-entry {
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .manual-entry input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            font-size: 14px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            color: #ffffff;
-        }
-
-        .manual-entry input::placeholder {
-            color: #a0a0a0;
-        }
-
-        .manual-entry input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .btn-with-spinner {
-            position: relative;
-        }
-
-        .btn-with-spinner .spinner {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #667eea;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        .loading-text {
-            color: white;
-            margin-top: 15px;
-            font-size: 16px;
+            transition: all 0.3s ease;
             font-weight: bold;
         }
 
-        .loading-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
 
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 3000;
-            overflow-y: auto;
-        }
-
-        .modal-content {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin: 5% auto;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow-y: auto;
-            color: #ffffff;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .api-key-container {
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
         }
 
-        .modal-title {
-            font-size: 22px;
-            font-weight: 600;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #a0a0a0;
-            transition: color 0.2s;
-        }
-
-        .close-modal:hover {
-            color: #e74c3c;
-        }
-
-        .settings-section {
-            margin-bottom: 25px;
-        }
-
-        .settings-section h3 {
-            font-size: 16px;
-            color: #667eea;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .setting-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .setting-item {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .setting-item label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #a0a0a0;
-        }
-
-        .setting-item input[type="text"],
-        .setting-item input[type="number"],
-        .setting-item input[type="time"],
-        .setting-item select {
+        .api-key-input {
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 14px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            color: #ffffff;
+            margin-top: 10px;
         }
 
-        .setting-item input[type="text"]:focus,
-        .setting-item input[type="number"]:focus,
-        .setting-item input[type="time"]:focus,
-        .setting-item select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        .player-container {
+            margin-bottom: 30px;
+            text-align: center;
         }
 
-        .setting-item input[type="checkbox"] {
-            margin-right: 8px;
-            transform: scale(1.2);
+        .video-player {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
 
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
             margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* SCROLLBAR HIDING - MAINTAIN SCROLLING FUNCTIONALITY */
-
-        /* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) */
-        ::-webkit-scrollbar {
-            display: none;
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        /* Hide scrollbar for all elements */
-        * {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
-        /* Ensure scrolling still works on main body */
-        body {
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
 
-        /* Prevent body scroll when modal is open */
-        .modal-open {
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        /* Ensure modal content can scroll */
-        .modal-content {
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Ensure attendance table can scroll */
-        .attendance-table {
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Optional: Add smooth scrolling for the entire app */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Dark mode styles (simplified since we're using the dark theme by default) */
-        body.dark-mode {
-            /* Already dark by default */
-        }
-
-        #attendanceCount {
-            color: #a0a0a0;
+        .video-channel {
+            color: #666;
             font-size: 14px;
+            margin-bottom: 5px;
         }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
+        .video-duration {
+            color: #999;
+            font-size: 12px;
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            padding: 20px;
+            background: #ffeaea;
+            border-radius: 10px;
+            margin: 20px 0;
         }
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-                height: auto;
-            }
+        .info-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
 
-            .left-panel, .right-panel {
-                padding: 15px;
-            }
-
-            .left-panel {
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .header {
-                padding: 15px 20px;
-            }
-
-            .header h1 {
-                font-size: 20px;
-            }
-
-            .header-right {
-                margin-top: 10px;
-            }
-
-            .camera-container {
-                min-height: 250px;
-            }
-
-            .table-container {
-                min-height: 300px;
-            }
-
-            .modal-content {
-                width: 95%;
-                margin: 10px auto;
-                padding: 15px;
-            }
+        .highlight {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>📚 School Attendance Management</h1>
-            <div class="header-right">
-                <div class="stats" id="stats">Ready to scan</div>
-                <button class="btn btn-purple" onclick="openSF2File()" id="sf2Button">
-                    <span id="sf2Spinner" style="display: none;"></span>
-                    🖨 Print SF2
-                </button>
-                <button class="btn btn-orange" onclick="openSettingsModal()">⚙️ Settings</button>
+        <h1>🎬 YouTube Search & Player</h1>
+        
+        <div class="api-key-container">
+            <div class="info-text">
+                <strong>Setup Required:</strong> You need a YouTube Data API key to search videos. 
+                <br><span class="highlight">Get your free API key from Google Cloud Console → YouTube Data API v3</span>
             </div>
+            <input type="password" class="api-key-input" id="apiKey" placeholder="Enter your YouTube Data API key here...">
         </div>
 
-        <div class="main-content">
-            <div class="left-panel">
-                <div class="camera-container">
-                    <div class="camera-display" id="cameraDisplay">
-                        <div>Camera Ready</div>
-                    </div>
-                    <div class="camera-controls">
-                        <button class="btn btn-danger" id="toggleBtn" onclick="toggleCamera()">⏹ Stop Scanning</button>
-                        <button class="btn" id="cameraSettingsBtn" onclick="showCameraSettings()">⚙️ Camera</button>
-                    </div>
-                    <div class="manual-entry">
-                        <input type="text" id="manualInput" placeholder="Enter student name for manual entry..." maxlength="50">
-                        <button class="btn" onclick="manualEntry()">Add</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="right-panel">
-                <div class="table-container">
-                    <div class="table-header">
-                        <h3>Today's Attendance</h3>
-                        <div id="attendanceCount">0 students</div>
-                    </div>
-                    <div class="attendance-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width: 80px;">Date</th>
-                                    <th style="width: 70px;">Time</th>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody id="attendanceBody">
-                                <!-- Attendance records will be inserted here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search for YouTube videos..." onkeypress="handleKeyPress(event)">
+            <button class="search-btn" onclick="searchVideos()">🔍 Search</button>
         </div>
-    </div>
 
-    <!-- Settings Modal -->
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Application Settings</h2>
-                <button class="close-modal" onclick="closeSettingsModal()">&times;</button>
-            </div>
-            
-            <div class="settings-section">
-                <h3>Attendance Settings</h3>
-                <div class="setting-group">
-                    <div class="setting-item">
-                        <label for="lateArrivalTime">Late Arrival Time</label>
-                        <input type="time" id="lateArrivalTime" step="300">
-                    </div>
-                    <div class="setting-item">
-                        <label for="dateFormat">Date Format</label>
-                        <select id="dateFormat">
-                            <option value="%m/%d/%y">MM/DD/YY</option>
-                            <option value="%d/%m/%y">DD/MM/YY</option>
-                            <option value="%Y-%m-%d">YYYY-MM-DD</option>
-                            <option value="%b %d, %Y">Mon DD, YYYY</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <label for="timeFormat">Time Format</label>
-                        <select id="timeFormat">
-                            <option value="%H:%M:%S">24-hour (HH:MM:SS)</option>
-                            <option value="%I:%M:%S %p">12-hour (HH:MM:SS AM/PM)</option>
-                            <option value="%H:%M">24-hour (HH:MM)</option>
-                            <option value="%I:%M %p">12-hour (HH:MM AM/PM)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>Camera Settings</h3>
-                <div class="setting-group">
-                    <div class="setting-item">
-                        <label for="cameraIndex">Camera Index</label>
-                        <input type="number" id="cameraIndex" min="0" max="10" step="1">
-                    </div>
-                    <div class="setting-item">
-                        <label for="cameraQuality">Image Quality (1-100)</label>
-                        <input type="number" id="cameraQuality" min="1" max="100" step="1">
-                    </div>
-                    <div class="setting-item">
-                        <label for="cameraFPS">Frames Per Second</label>
-                        <input type="number" id="cameraFPS" min="1" max="60" step="1">
-                    </div>
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>Appearance Settings</h3>
-                <div class="setting-group">
-                    <div class="setting-item">
-                        <label>
-                            <input type="checkbox" id="darkMode"> Dark Mode
-                        </label>
-                    </div>
-                    <div class="setting-item">
-                        <label>
-                            <input type="checkbox" id="windowAlwaysOnTop"> Window Always On Top
-                        </label>
-                    </div>
-                    <div class="setting-item">
-                        <label for="fontSize">Font Size</label>
-                        <select id="fontSize">
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-danger" onclick="resetSettings()">Reset to Defaults</button>
-                <button class="btn" onclick="closeSettingsModal()">Cancel</button>
-                <button class="btn btn-success" onclick="saveSettings()">Save Settings</button>
-            </div>
+        <div class="player-container" id="playerContainer" style="display: none;">
+            <iframe class="video-player" id="videoPlayer" src="" frameborder="0" allowfullscreen></iframe>
         </div>
-    </div>
 
-    <!-- Loading overlay -->
-    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Updating SF2 File...</div>
-        </div>
+        <div id="results"></div>
     </div>
 
     <script>
-        let cameraActive = false;
-        let attendanceData = [];
-        let sf2LoadingTimeout;
-        let currentSettings = {};
+        let currentVideos = [];
 
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeApp();
-            
-            // Handle Enter key in manual input
-            document.getElementById('manualInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    manualEntry();
-                }
-            });
-        });
-
-        async function initializeApp() {
-            try {
-                // Add a small delay to ensure pywebview API is ready
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
-                // First check if API is available
-                if (!window.pywebview || !pywebview.api) {
-                    throw new Error('Python backend not ready');
-                }
-
-                // Load settings first
-                const settingsResponse = await pywebview.api.get_settings();
-                if (settingsResponse.success) {
-                    currentSettings = settingsResponse.settings;
-                    applySettingsToUI(currentSettings);
-                    applyThemeSettings(currentSettings);
-                }
-
-                const camCheck = await pywebview.api.check_camera_available();
-                if (!camCheck.success) {
-                    showToast(camCheck.message, 'warning');
-                    return;
-                }
-                
-                const stats = await pywebview.api.get_stats();
-                updateUI(stats);
-                
-                // Auto-start camera with retry logic
-                let retries = 3;
-                while (retries > 0) {
-                    try {
-                        const result = await pywebview.api.toggle_camera();
-                        if (result.success) {
-                            cameraActive = true;
-                            updateCameraButton();
-                            break;
-                        }
-                    } catch (error) {
-                        console.log(`Camera start attempt ${4-retries} failed`, error);
-                        if (retries === 1) {
-                            showToast('Camera initialization failed - try manual start', 'warning');
-                        }
-                    }
-                    retries--;
-                    await new Promise(resolve => setTimeout(resolve, 300));
-                }
-            } catch (error) {
-                console.error('Error initializing app:', error);
-                showToast('Initializing... please wait', 'warning');
-                
-                // Try again after a delay
-                setTimeout(initializeApp, 1000);
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                searchVideos();
             }
         }
 
-        function applySettingsToUI(settings) {
-            // Attendance Settings
-            document.getElementById('lateArrivalTime').value = settings.late_arrival_time;
-            document.getElementById('dateFormat').value = settings.date_format;
-            document.getElementById('timeFormat').value = settings.time_format;
-            
-            // Camera Settings
-            document.getElementById('cameraIndex').value = settings.camera_index;
-            document.getElementById('cameraQuality').value = settings.camera_quality;
-            document.getElementById('cameraFPS').value = settings.camera_fps;
-            
-            // Appearance Settings
-            document.getElementById('darkMode').checked = settings.dark_mode;
-            document.getElementById('windowAlwaysOnTop').checked = settings.window_always_on_top;
-            document.getElementById('fontSize').value = settings.font_size;
-        }
+        async function searchVideos() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const query = document.getElementById('searchInput').value.trim();
+            const resultsDiv = document.getElementById('results');
 
-        function applyThemeSettings(settings) {
-            if (settings.dark_mode) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
-            
-            // Apply font size
-            document.body.style.fontSize = settings.font_size === 'small' ? '13px' : 
-                                         settings.font_size === 'large' ? '16px' : '14px';
-        }
-
-        // Update these JavaScript functions:
-        function openSettingsModal() {
-            const modal = document.getElementById('settingsModal');
-            modal.style.display = 'block';
-            document.body.classList.add('modal-open'); // Add this line
-        }
-
-        function closeSettingsModal() {
-            const modal = document.getElementById('settingsModal');  
-            modal.style.display = 'none';
-            document.body.classList.remove('modal-open'); // Add this line
-        }
-
-        async function saveSettings() {
-            try {
-                const newSettings = {
-                    late_arrival_time: document.getElementById('lateArrivalTime').value,
-                    date_format: document.getElementById('dateFormat').value,
-                    time_format: document.getElementById('timeFormat').value,
-                    camera_index: parseInt(document.getElementById('cameraIndex').value),
-                    camera_quality: parseInt(document.getElementById('cameraQuality').value),
-                    camera_fps: parseInt(document.getElementById('cameraFPS').value),
-                    dark_mode: document.getElementById('darkMode').checked,
-                    window_always_on_top: document.getElementById('windowAlwaysOnTop').checked,
-                    font_size: document.getElementById('fontSize').value,
-                };
-
-                const result = await pywebview.api.update_settings(newSettings);
-                if (result.success) {
-                    showToast('Settings saved successfully', 'success');
-                    currentSettings = newSettings;
-                    applyThemeSettings(newSettings);
-                    closeSettingsModal();
-                    
-                    // If camera is active, we might need to restart it with new settings
-                    if (cameraActive) {
-                        const restartResult = await pywebview.api.toggle_camera();
-                        if (restartResult.success) {
-                            await pywebview.api.toggle_camera();
-                        }
-                    }
-                } else {
-                    showToast(result.message, 'error');
-                }
-            } catch (error) {
-                console.error('Error saving settings:', error);
-                showToast('Error saving settings', 'error');
-            }
-        }
-
-        async function resetSettings() {
-            try {
-                const result = await pywebview.api.reset_settings();
-                if (result.success) {
-                    showToast('Settings reset to defaults', 'success');
-                    const settingsResponse = await pywebview.api.get_settings();
-                    if (settingsResponse.success) {
-                        currentSettings = settingsResponse.settings;
-                        applySettingsToUI(currentSettings);
-                        applyThemeSettings(currentSettings);
-                    }
-                } else {
-                    showToast(result.message, 'error');
-                }
-            } catch (error) {
-                console.error('Error resetting settings:', error);
-                showToast('Error resetting settings', 'error');
-            }
-        }
-
-        function showCameraSettings() {
-            openSettingsModal();
-            // Scroll to camera settings section
-            document.querySelector('[for="cameraIndex"]').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function updateAttendanceTable(data) {
-            const tbody = document.getElementById('attendanceBody');
-            tbody.innerHTML = '';
-            
-            // Sort by time descending (most recent first)
-            const sortedData = [...data].sort((a, b) => {
-                const timeA = new Date(`${a.Date} ${a.Time}`);
-                const timeB = new Date(`${b.Date} ${b.Time}`);
-                return timeB - timeA;
-            });
-            
-            sortedData.forEach(entry => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${entry.Date}</td>
-                    <td>${entry.Time}</td>
-                    <td>${entry.Name}</td>
-                `;
-                tbody.appendChild(row);
-            });
-            
-            // Update attendance count
-            updateAttendanceCount(data.length);
-        }
-
-        function updateAttendanceCount(count) {
-            const countElement = document.getElementById('attendanceCount');
-            countElement.textContent = `${count} student${count !== 1 ? 's' : ''}`;
-        }
-
-        function updateStatsDisplay(count) {
-            const statsElement = document.getElementById('stats');
-            const scanText = count === 1 ? 'scan' : 'scans';
-            statsElement.textContent = `${count} ${scanText} today`;
-        }
-
-        async function toggleCamera() {
-            try {
-                setLoading(true);
-                
-                // Get current camera status from backend first
-                const statusResult = await pywebview.api.get_camera_status();
-                console.log('Current camera status:', statusResult);
-                
-                const result = await pywebview.api.toggle_camera();
-                console.log('Toggle result:', result);
-                
-                if (result.success) {
-                    // Update local state based on the result message
-                    if (result.message.includes('started')) {
-                        cameraActive = true;
-                    } else if (result.message.includes('stopped')) {
-                        cameraActive = false;
-                    }
-                    
-                    updateCameraButton();
-                    showToast(result.message, 'success');
-                } else {
-                    showToast(result.message, 'error');
-                }
-            } catch (error) {
-                console.error('Error toggling camera:', error);
-                showToast('Error with camera operation', 'error');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        function updateCameraButton() {
-            const btn = document.getElementById('toggleBtn');
-            if (cameraActive) {
-                btn.textContent = '⏹ Stop Scanning';
-                btn.className = 'btn btn-danger';
-            } else {
-                btn.textContent = '▶ Start Scanning';
-                btn.className = 'btn btn-success';
-                
-                // Clear camera display
-                document.getElementById('cameraDisplay').innerHTML = '<div>Camera Stopped</div>';
-            }
-        }
-
-        async function manualEntry() {
-            const input = document.getElementById('manualInput');
-            const name = input.value.trim();
-            
-            if (!name) {
-                showToast('Please enter a student name', 'warning');
+            if (!apiKey) {
+                showError('Please enter your YouTube Data API key first.');
                 return;
             }
 
+            if (!query) {
+                showError('Please enter a search term.');
+                return;
+            }
+
+            resultsDiv.innerHTML = '<div class="loading">🔍 Searching for videos...</div>';
+
             try {
-                setLoading(true);
-                const result = await pywebview.api.manual_entry(name);
-                handleQRDetection(result);
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&q=${encodeURIComponent(query)}&type=video&key=${apiKey}`);
                 
-                if (result.success) {
-                    input.value = '';
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
                 }
+
+                const data = await response.json();
+                displayResults(data.items);
             } catch (error) {
-                console.error('Error with manual entry:', error);
-                showToast('Error adding manual entry', 'error');
-            } finally {
-                setLoading(false);
+                showError(`Error searching videos: ${error.message}. Please check your API key and try again.`);
             }
         }
 
-        async function openSF2File() {
-            const overlay = document.getElementById('loadingOverlay');
-            const button = document.getElementById('sf2Button');
+        function displayResults(videos) {
+            const resultsDiv = document.getElementById('results');
             
-            try {
-                // Show loading overlay immediately
-                overlay.style.display = 'flex';
-                button.disabled = true;
-                
-                const result = await pywebview.api.open_sf2_file();
-                
-                if (result.success) {
-                    showToast(result.message, 'success');
-                } else {
-                    showToast(result.message, 'error');
-                }
-            } catch (error) {
-                console.error('Error opening SF2:', error);
-                showToast('Error opening SF2 file', 'error');
-            } finally {
-                overlay.style.display = 'none';
-                button.disabled = false;
+            if (!videos || videos.length === 0) {
+                resultsDiv.innerHTML = '<div class="error">No videos found. Try a different search term.</div>';
+                return;
             }
+
+            currentVideos = videos;
+            let html = '<div class="results-grid">';
+
+            videos.forEach((video, index) => {
+                const thumbnail = video.snippet.thumbnails.medium.url;
+                const title = video.snippet.title;
+                const channel = video.snippet.channelTitle;
+                const publishDate = new Date(video.snippet.publishedAt).toLocaleDateString();
+
+                html += `
+                    <div class="video-card" onclick="playVideo('${video.id.videoId}')">
+                        <img src="${thumbnail}" alt="${title}" class="video-thumbnail">
+                        <div class="video-info">
+                            <div class="video-title">${title}</div>
+                            <div class="video-channel">${channel}</div>
+                            <div class="video-duration">Published: ${publishDate}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            resultsDiv.innerHTML = html;
         }
 
-        function updateCameraFrame(imageData) {
-            if (cameraActive) {
-                const display = document.getElementById('cameraDisplay');
-                display.innerHTML = `<img src="${imageData}" alt="Camera Feed">`;
-            }
-        }
-
-        function handleQRDetection(result) {
-            if (result.success) {
-                // Refresh all data from database
-                pywebview.api.get_stats().then(stats => {
-                    attendanceData = stats.data;
-                    updateAttendanceTable(attendanceData);
-                    updateStatsDisplay(attendanceData.length);
-                });
-                showToast(result.message, 'success');
-                if (currentSettings.sound_notifications) {
-                    playSuccessSound();
-                }
-            } else {
-                const toastType = result.type === 'duplicate' ? 'warning' : 'error';
-                showToast(result.message, toastType);
-                
-                if (result.type === 'duplicate' && currentSettings.sound_notifications) {
-                    playDuplicateSound();
-                }
-            }
-        }
-
-        function handleNewDay(stats) {
-            attendanceData = stats.data;
-            updateAttendanceTable(attendanceData);
-            updateStatsDisplay(attendanceData.length);
-            showToast('🌙 New day - showing today\'s records', 'success');
-        }
-
-        function updateUI(stats) {
-            attendanceData = stats.data;
-            cameraActive = stats.camera_active;
-            updateAttendanceTable(attendanceData);
-            updateStatsDisplay(attendanceData.length);
-            updateCameraButton();
-        }
-
-
-        function showToast(message, type = 'success') {
-            // Check if visual notifications are enabled
-            if (!currentSettings.visual_notifications) return;
+        function playVideo(videoId) {
+            const playerContainer = document.getElementById('playerContainer');
+            const videoPlayer = document.getElementById('videoPlayer');
             
-            // Remove existing toasts
-            const existingToasts = document.querySelectorAll('.toast');
-            existingToasts.forEach(toast => toast.remove());
+            // Use YouTube embed URL which typically has fewer ads
+            videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+            playerContainer.style.display = 'block';
             
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
+            // Scroll to player
+            playerContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showError(message) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<div class="error">${message}</div>`;
+        }
+
+        // Initialize with some sample searches
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const placeholders = [
+                'Search for music videos...',
+                'Find tutorials...',
+                'Discover documentaries...',
+                'Look for movie trailers...'
+            ];
             
-            document.body.appendChild(toast);
-            
-            // Auto remove after 3 seconds
-            setTimeout(() => {
-                toast.style.animation = 'slideOutToTop 0.3s ease';
-                setTimeout(() => {
-                    if (toast.parentNode) {
-                        toast.remove();
-                    }
-                }, 300);
+            let currentPlaceholder = 0;
+            setInterval(() => {
+                searchInput.placeholder = placeholders[currentPlaceholder];
+                currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
             }, 3000);
-        }
-
-        function setLoading(loading) {
-            const container = document.querySelector('.container');
-            if (loading) {
-                container.classList.add('loading');
-            } else {
-                container.classList.remove('loading');
-            }
-        }
-
-        function playSuccessSound() {
-            try {
-                // Create a simple success beep using Web Audio API
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.1);
-                
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime + 0.01);
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime + 0.1);
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime + 0.2);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.2);
-            } catch (error) {
-                // Audio not supported or blocked
-                console.log('Audio feedback not available');
-            }
-        }
-
-        function playDuplicateSound() {
-            try {
-                // Create a warning beep for duplicates
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
-                oscillator.frequency.setValueAtTime(350, audioContext.currentTime + 0.15);
-                
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime + 0.01);
-                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime + 0.15);
-                gainNode.gain.setValueAtTime(0, audioContext.currentTime + 0.3);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.3);
-            } catch (error) {
-                // Audio not supported or blocked
-                console.log('Audio feedback not available');
-            }
-        }
-
-
-        function updateCameraStatus(active) {
-            // This function updates the camera status in your UI
-            cameraActive = active;
-            updateCameraButton();
-            console.log('Camera status updated:', active);
-        }
-
-        function applyWindowSetting(setting, value) {
-            // Handle window-specific settings
-            console.log('Window setting applied:', setting, value);
-            
-            if (setting === 'window_always_on_top') {
-                // The Python backend handles the actual window behavior
-                // This is just for UI feedback
-                showToast(value ? 'Window set to always on top' : 'Window no longer always on top', 'info');
-            }
-        }
-
-        function applyThemeSetting(setting, value) {
-            // Handle theme-specific settings
-            console.log('Theme setting applied:', setting, value);
-            
-            if (setting === 'dark_mode') {
-                if (value) {
-                    document.body.classList.add('dark-mode');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                }
-            }
-        }
-
-        function applyFontSetting(setting, value) {
-            // Handle font-specific settings
-            console.log('Font setting applied:', setting, value);
-            
-            if (setting === 'font_size') {
-                document.body.style.fontSize = value === 'small' ? '13px' : 
-                                             value === 'large' ? '16px' : '14px';
-            }
-        }
-
-
-
-        // Make these functions available to the Python backend
-        window.updateCameraStatus = updateCameraStatus;
-        window.applyWindowSetting = applyWindowSetting;
-        window.applyThemeSetting = applyThemeSetting;
-        window.applyFontSetting = applyFontSetting;
-        window.updateCameraFrame = updateCameraFrame;
-        window.handleQRDetection = handleQRDetection;
-        window.handleNewDay = handleNewDay;
-        window.updateUI = updateUI;
-
+        });
     </script>
 </body>
 </html>
