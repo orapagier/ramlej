@@ -193,14 +193,7 @@
 <body>
     <div class="container">
         <h1>🎬 YouTube Search & Player</h1>
-        
-        <div class="api-key-container">
-            <div class="info-text">
-                <strong>Setup Required:</strong> You need a YouTube Data API key to search videos. 
-                <br><span class="highlight">Get your free API key from Google Cloud Console → YouTube Data API v3</span>
-            </div>
-            <input type="password" class="api-key-input" id="apiKey" placeholder="Enter your YouTube Data API key here...">
-        </div>
+
 
         <div class="search-container">
             <input type="text" class="search-input" id="searchInput" placeholder="Search for YouTube videos..." onkeypress="handleKeyPress(event)">
@@ -215,6 +208,9 @@
     </div>
 
     <script>
+        // ADD YOUR API KEY HERE
+        const API_KEY = 'YOUR_API_KEY_HERE';
+        
         let currentVideos = [];
 
         function handleKeyPress(event) {
@@ -224,12 +220,12 @@
         }
 
         async function searchVideos() {
-            const apiKey = document.getElementById('apiKey').value.trim();
+            const apiKey = API_KEY;
             const query = document.getElementById('searchInput').value.trim();
             const resultsDiv = document.getElementById('results');
 
-            if (!apiKey) {
-                showError('Please enter your YouTube Data API key first.');
+            if (!apiKey || apiKey === 'AIzaSyCUQnDjRwDQs3S4eUTIqy3fmTXYLnG0nkM') {
+                showError('Please add your YouTube Data API key to the API_KEY variable in the code.');
                 return;
             }
 
