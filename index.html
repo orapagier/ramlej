@@ -127,8 +127,8 @@
 
         .video-player {
             width: 100%;
-            max-width: 800px;
-            height: 450px;
+            max-width: 1000px;
+            height: 600px;
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
@@ -347,8 +347,8 @@
             const playerContainer = document.getElementById('playerContainer');
             const videoPlayer = document.getElementById('videoPlayer');
             
-            // Use YouTube embed URL with parameters to reduce ads
-            videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1&fs=0`;
+            // Use YouTube embed URL with parameters to reduce ads - keep fullscreen icon
+            videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1`;
             playerContainer.style.display = 'block';
             
             // Scroll to player
@@ -366,26 +366,11 @@
         function enterFullscreen() {
             document.body.classList.add('fullscreen-mode');
             isFullscreen = true;
-            
-            // Update the video player to use fullscreen parameters
-            const videoPlayer = document.getElementById('videoPlayer');
-            const currentSrc = videoPlayer.src;
-            if (currentSrc) {
-                // Remove fs=0 parameter to allow fullscreen controls
-                videoPlayer.src = currentSrc.replace('fs=0', 'fs=1');
-            }
         }
 
         function exitFullscreen() {
             document.body.classList.remove('fullscreen-mode');
             isFullscreen = false;
-            
-            // Restore normal video player
-            const videoPlayer = document.getElementById('videoPlayer');
-            const currentSrc = videoPlayer.src;
-            if (currentSrc) {
-                videoPlayer.src = currentSrc.replace('fs=1', 'fs=0');
-            }
         }
 
         function closePlayer() {
