@@ -18,6 +18,48 @@
             padding: 20px;
         }
 
+        /* Fullscreen mode styles */
+        body.fullscreen-mode {
+            padding: 0;
+            background: black;
+        }
+
+        body.fullscreen-mode .container {
+            max-width: none;
+            margin: 0;
+            background: black;
+            border-radius: 0;
+            padding: 0;
+            box-shadow: none;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.fullscreen-mode .search-container,
+        body.fullscreen-mode h1,
+        body.fullscreen-mode #results {
+            display: none;
+        }
+
+        body.fullscreen-mode .player-container {
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.fullscreen-mode .video-player {
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -77,26 +119,10 @@
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
 
-        .api-key-container {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .api-key-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
         .player-container {
             margin-bottom: 30px;
             text-align: center;
+            position: relative;
         }
 
         .video-player {
@@ -105,6 +131,30 @@
             height: 450px;
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .player-controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .control-btn {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
         .results-grid {
@@ -194,8 +244,6 @@
     <div class="container">
         <h1>🎬 YouTube Search</h1>
         
-
-
         <div class="search-container">
             <input type="text" class="search-input" id="searchInput" placeholder="Search for YouTube videos..." onkeypress="handleKeyPress(event)">
             <button class="search-btn" onclick="searchVideos()">🔍 Search</button>
@@ -203,6 +251,10 @@
 
         <div class="player-container" id="playerContainer" style="display: none;">
             <iframe class="video-player" id="videoPlayer" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="player-controls">
+                <button class="control-btn" onclick="toggleFullscreen()">📺 Toggle Fullscreen</button>
+                <button class="control-btn" onclick="closePlayer()">❌ Close Player</button>
+            </div>
         </div>
 
         <div id="results"></div>
@@ -213,12 +265,24 @@
         const API_KEY = 'AIzaSyCUQnDjRwDQs3S4eUTIqy3fmTXYLnG0nkM';
         
         let currentVideos = [];
+        let isFullscreen = false;
 
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 searchVideos();
             }
+            // ESC key to exit fullscreen
+            if (event.key === 'Escape') {
+                exitFullscreen();
+            }
         }
+
+        // Listen for ESC key globally
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                exitFullscreen();
+            }
+        });
 
         async function searchVideos() {
             const apiKey = API_KEY;
@@ -283,12 +347,54 @@
             const playerContainer = document.getElementById('playerContainer');
             const videoPlayer = document.getElementById('videoPlayer');
             
-            // Use YouTube embed URL which typically has fewer ads
-            videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+            // Use YouTube embed URL with parameters to reduce ads
+            videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1&fs=0`;
             playerContainer.style.display = 'block';
             
             // Scroll to player
             playerContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function toggleFullscreen() {
+            if (!isFullscreen) {
+                enterFullscreen();
+            } else {
+                exitFullscreen();
+            }
+        }
+
+        function enterFullscreen() {
+            document.body.classList.add('fullscreen-mode');
+            isFullscreen = true;
+            
+            // Update the video player to use fullscreen parameters
+            const videoPlayer = document.getElementById('videoPlayer');
+            const currentSrc = videoPlayer.src;
+            if (currentSrc) {
+                // Remove fs=0 parameter to allow fullscreen controls
+                videoPlayer.src = currentSrc.replace('fs=0', 'fs=1');
+            }
+        }
+
+        function exitFullscreen() {
+            document.body.classList.remove('fullscreen-mode');
+            isFullscreen = false;
+            
+            // Restore normal video player
+            const videoPlayer = document.getElementById('videoPlayer');
+            const currentSrc = videoPlayer.src;
+            if (currentSrc) {
+                videoPlayer.src = currentSrc.replace('fs=1', 'fs=0');
+            }
+        }
+
+        function closePlayer() {
+            const playerContainer = document.getElementById('playerContainer');
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            playerContainer.style.display = 'none';
+            videoPlayer.src = '';
+            exitFullscreen();
         }
 
         function showError(message) {
