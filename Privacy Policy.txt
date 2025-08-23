@@ -1,0 +1,70 @@
+Privacy Policy for AI Chatbot on Messenger
+
+Effective Date: August 18, 2025
+
+SNS Solutions ("we," "our," or "us") operates the AI Chatbot on Messenger (the "Service"). This Privacy Policy explains how we collect, use, and protect your information when you interact with our chatbot.
+
+1. Information We Collect
+
+When you use our AI Chatbot on Messenger, we may collect:
+
+Messenger profile information (such as your name, profile ID, and profile picture) as provided by Facebook.
+
+Messages and interactions you send to the chatbot, so we can generate responses.
+
+Technical data such as timestamps and session logs for security and performance purposes.
+
+We do not collect sensitive personal information unless you voluntarily provide it during your interactions.
+
+2. How We Use Your Information
+
+We use the information we collect to:
+
+Provide chatbot responses and improve the quality of our Service.
+
+Personalize your experience when interacting with the chatbot.
+
+Maintain the security and performance of the Service.
+
+Analyze usage trends to enhance functionality.
+
+3. Sharing of Information
+
+We do not sell your personal data.
+We may share information only with:
+
+Service providers (e.g., hosting, AI processing, analytics) who assist us in operating the chatbot.
+
+Legal authorities if required by law, regulation, or to protect our legal rights.
+
+4. Data Retention
+
+We keep your messages and related data only as long as necessary to provide the Service or as required by law. You may request deletion of your data at any time (see Section 6).
+
+5. Security
+
+We use reasonable technical and organizational measures to protect your information. However, no online system is 100% secure, and we cannot guarantee absolute security.
+
+6. Your Rights
+
+Depending on your location, you may have rights under data protection laws (such as GDPR or CCPA), including:
+
+Accessing the data we hold about you.
+
+Requesting correction or deletion of your data.
+
+Withdrawing consent for processing (where applicable).
+
+To exercise these rights, please contact us (see Section 7).
+
+7. Contact Us
+
+If you have any questions about this Privacy Policy or how your data is handled, please contact us at:
+
+📧 Email: orapajelmar@gmail.com
+🏢 Company/Developer Name: Jelmar Orapa
+🌐 Website: sns1.online
+
+8. Changes to This Privacy Policy
+
+We may update this Privacy Policy from time to time. Any changes will be posted with a new "Effective Date." Continued use of the chatbot after updates means you accept the revised policy.
