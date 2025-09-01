@@ -295,14 +295,8 @@
         // Initialize Google OAuth
         function initGoogleAuth() {
             // Create OAuth URL
-            const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
-            authUrl.searchParams.set('client_id', CLIENT_ID);
-            authUrl.searchParams.set('redirect_uri', REDIRECT_URI);
-            authUrl.searchParams.set('response_type', 'code');
-            authUrl.searchParams.set('scope', SCOPE);
-            authUrl.searchParams.set('access_type', 'offline');
-            authUrl.searchParams.set('prompt', 'consent');
-            authUrl.searchParams.set('state', generateRandomState());
+            const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=consent&client_id=878727070914-olicqd07dev6j3smbb7prg82hrqa3s6g.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fautomation.ramlej.online%2Frest%2Foauth2-credential%2Fcallback&response_type=code&state=eyJ0b2tlbiI6ImtrY2dxTVE3LTkzcGpYd2JMeDlLYzRpSGhtS2RpcWNYd3FWSSIsImNpZCI6IkpGOXpYQWp2dkNlOEthVEkiLCJjcmVhdGVkQXQiOjE3NTY3MzU0NDkwNTN9&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.labels%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.addons.current.action.compose%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.addons.current.message.action%20https%3A%2F%2Fmail.google.com%2F%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.modify%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.compose&service=lso&o2v=2&flowName=GeneralOAuthFlow');
+
             
             return authUrl.toString();
         }
@@ -461,3 +455,4 @@
     </script>
 </body>
 </html>
+
